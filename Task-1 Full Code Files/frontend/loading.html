@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Loading Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: transparent;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        .logo-loader {
+            position: relative;
+            width: 180px;
+            height: 180px;
+        }
+        
+        .logo-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: float 3.5s ease-in-out infinite;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+            animation: pulse 2.4s ease-in-out infinite;
+        }
+        
+        .shine-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.7) 0%, transparent 60%);
+            animation: shine 4s ease-in-out infinite;
+            opacity: 0.5;
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4d8af0;
+            opacity: 0;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+        
+        @keyframes shine {
+            0%, 100% { transform: rotate(0deg); opacity: 0.3; }
+            50% { transform: rotate(180deg); opacity: 0.7; }
+        }
+        
+        @keyframes particle-float {
+            0% { 
+                transform: translate(0, 0) scale(0); 
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% { 
+                transform: translate(var(--tx), var(--ty)) scale(1); 
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-loader">
+        <div class="particles" id="particles"></div>
+        <div class="logo-container">
+            <img src="transparent_logo.png" alt="Logo" class="logo">
+            <div class="shine-effect"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const colors = ['#4d8af0', '#34c3eb', '#6d5ee6', '#ff7b54', '#ffb26b'];
+            
+            // Create particles
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random position and color
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 60 + Math.random() * 40;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Animation delay and duration
+                const delay = Math.random() * 3;
+                const duration = 2 + Math.random() * 2;
+                
+                particle.style.animation = `particle-float ${duration}s ease-in-out ${delay}s infinite`;
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Simulate loading completion
+            setTimeout(() => {
+                document.querySelector('.logo-loader').style.opacity = '0';
+                document.querySelector('.logo-loader').style.transform = 'scale(0.9)';
+                document.querySelector('.logo-loader').style.transition = 'all 0.8s ease';
+                
+                setTimeout(() => {
+                    document.querySelector('.logo-loader').style.display = 'none';
+                    window.location.href = 'landing.html';
+                }, 800);
+            }, 4000); // Simulate 4 second loading
+        });
+    </script>
+</body>
+</html>

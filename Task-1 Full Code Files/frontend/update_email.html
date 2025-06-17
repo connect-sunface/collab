@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Your Email | Sunface Tech Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .email-update-container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        .form-container {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f1f1f1;
+            color: var(--dark);
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background: #e1e1e1;
+        }
+
+        .otp-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .status-message.success {
+            background: rgba(46, 204, 113, 0.1);
+            color: #27ae60;
+            border: 1px solid #2ecc71;
+        }
+
+        .status-message.error {
+            background: rgba(231, 76, 60, 0.1);
+            color: #c0392b;
+            border: 1px solid #e74c3c;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+            transform: translateX(-3px);
+        }
+
+        .back-link i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 480px) {
+            .header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-update-container">
+        <div class="header">
+            <h2><i class="fas fa-envelope"></i> Update Your Email</h2>
+            <p>Change your email address on Sunface Tech Services</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-group">
+                <label for="currentEmail">Current Email</label>
+                <input type="email" id="currentEmail" class="form-control" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="newEmail">New Email</label>
+                <input type="email" id="newEmail" class="form-control" placeholder="Enter your new email">
+            </div>
+            
+            <button id="sendOtpBtn" class="btn btn-primary">
+                <span id="sendOtpText">Send Verification OTP</span>
+                <span id="sendOtpLoader" class="loading" style="display: none;"></span>
+            </button>
+            
+            <div class="otp-section" id="otpSection">
+                <div class="form-group">
+                    <label for="otp">Enter OTP</label>
+                    <input type="text" id="otp" class="form-control" placeholder="Enter the OTP sent to your email">
+                </div>
+                
+                <button id="verifyOtpBtn" class="btn btn-primary">
+                    <span id="verifyText">Verify OTP</span>
+                    <span id="verifyLoader" class="loading" style="display: none;"></span>
+                </button>
+                
+                <button id="resendOtpBtn" class="btn btn-secondary">
+                    <i class="fas fa-redo"></i> Resend OTP
+                </button>
+            </div>
+            
+            <button id="cancelBtn" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            
+            <div id="statusMessage" class="status-message"></div>
+            
+            <a href="landing.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Services
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentEmailEl = document.getElementById('currentEmail');
+            const newEmailEl = document.getElementById('newEmail');
+            const sendOtpBtn = document.getElementById('sendOtpBtn');
+            const verifyOtpBtn = document.getElementById('verifyOtpBtn');
+            const resendOtpBtn = document.getElementById('resendOtpBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const otpInput = document.getElementById('otp');
+            const otpSection = document.getElementById('otpSection');
+            const statusMessage = document.getElementById('statusMessage');
+            const sendOtpText = document.getElementById('sendOtpText');
+            const sendOtpLoader = document.getElementById('sendOtpLoader');
+            const verifyText = document.getElementById('verifyText');
+            const verifyLoader = document.getElementById('verifyLoader');
+            
+            // Check if user is logged in
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const user = JSON.parse(localStorage.getItem('loggedInUser'));
+            const loginMethod = localStorage.getItem('loginMethod');
+            
+            if (!isLoggedIn || !user) {
+                alert('You need to be logged in to update your email');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Check login method restrictions
+            if (loginMethod === 'password' || loginMethod === 'google') {
+                showStatus('Email cannot be changed for this login method', 'error');
+                newEmailEl.disabled = true;
+                sendOtpBtn.disabled = true;
+                return;
+            }
+            
+            // Set current email
+            currentEmailEl.value = user.email || 'N/A';
+            
+            // Send OTP button click handler
+            sendOtpBtn.addEventListener('click', async function() {
+                const newEmail = newEmailEl.value.trim();
+                
+                // Validation
+                if (!newEmail) {
+                    showStatus('Please enter a new email', 'error');
+                    newEmailEl.focus();
+                    return;
+                }
+                
+                if (!isValidEmail(newEmail)) {
+                    showStatus('Please enter a valid email address', 'error');
+                    newEmailEl.focus();
+                    return;
+                }
+                
+                if (newEmail === currentEmailEl.value) {
+                    showStatus('New email must be different from current email', 'error');
+                    newEmailEl.focus();
+                    return;
+                }
+                
+                // Show loading state
+                sendOtpText.textContent = 'Sending OTP...';
+                sendOtpLoader.style.display = 'inline-block';
+                sendOtpBtn.disabled = true;
+                
+                try {
+                    // Get JWT token from localStorage
+                    const token = localStorage.getItem('token');
+                    
+                    if (!token) {
+                        throw new Error('Authentication token not found');
+                    }
+                    
+                    // Send OTP request to backend
+                    const response = await fetch('http://localhost:5000/api/auth/update-email/request-otp', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ newEmail })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Failed to send OTP');
+                    }
+                    
+                    // Show success
+                    showStatus('OTP sent to your new email', 'success');
+                    
+                    // Show OTP section
+                    otpSection.style.display = 'block';
+                    otpInput.focus();
+                    
+                    // Reset button
+                    sendOtpText.textContent = 'OTP Sent!';
+                    setTimeout(() => {
+                        sendOtpText.textContent = 'Send Verification OTP';
+                        sendOtpLoader.style.display = 'none';
+                        sendOtpBtn.disabled = false;
+                    }, 2000);
+                    
+                } catch (error) {
+                    showStatus(error.message || 'Failed to send OTP. Please try again.', 'error');
+                    sendOtpText.textContent = 'Send Verification OTP';
+                    sendOtpLoader.style.display = 'none';
+                    sendOtpBtn.disabled = false;
+                }
+            });
+            
+            // Verify OTP button handler
+            verifyOtpBtn.addEventListener('click', async function() {
+                const otp = otpInput.value.trim();
+                const newEmail = newEmailEl.value.trim();
+                
+                if (!otp) {
+                    showStatus('Please enter the OTP', 'error');
+                    otpInput.focus();
+                    return;
+                }
+                
+                // Show loading state
+                verifyText.textContent = 'Verifying...';
+                verifyLoader.style.display = 'inline-block';
+                verifyOtpBtn.disabled = true;
+                
+                try {
+                    // Get JWT token from localStorage
+                    const token = localStorage.getItem('token');
+                    
+                    if (!token) {
+                        throw new Error('Authentication token not found');
+                    }
+                    
+                    // Send verification request to backend
+                    const response = await fetch('http://localhost:5000/api/auth/update-email/verify-otp', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ otp, newEmail })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (!response.ok) {
+                        throw new Error(data.message || 'OTP verification failed');
+                    }
+                    
+                    // Update local storage
+                    user.email = newEmail;
+                    localStorage.setItem('loggedInUser', JSON.stringify(user));
+                    
+                    // Show success
+                    showStatus('Email updated successfully!', 'success');
+                    
+                    // Reset form after success
+                    verifyText.textContent = 'Verify OTP';
+                    verifyLoader.style.display = 'none';
+                    verifyOtpBtn.disabled = false;
+                    
+                    // Update landing page email automatically
+                    if (window.opener) {
+                        window.opener.postMessage({ 
+                            type: 'USER_UPDATE', 
+                            user: user 
+                        }, '*');
+                    }
+                    
+                    // Update current email display
+                    currentEmailEl.value = newEmail;
+                    
+                    // Hide OTP section
+                    setTimeout(() => {
+                        otpSection.style.display = 'none';
+                        otpInput.value = '';
+                    }, 3000);
+                    
+                } catch (error) {
+                    showStatus(error.message || 'Failed to verify OTP. Please try again.', 'error');
+                    verifyText.textContent = 'Verify OTP';
+                    verifyLoader.style.display = 'none';
+                    verifyOtpBtn.disabled = false;
+                }
+            });
+            
+            // Resend OTP button handler
+            resendOtpBtn.addEventListener('click', function() {
+                sendOtpBtn.click();
+            });
+            
+            // Cancel button handler
+            cancelBtn.addEventListener('click', function() {
+                newEmailEl.value = '';
+                otpInput.value = '';
+                otpSection.style.display = 'none';
+                statusMessage.style.display = 'none';
+            });
+            
+            // Email validation function
+            function isValidEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+            
+            // Function to show status messages
+            function showStatus(message, type) {
+                statusMessage.textContent = message;
+                statusMessage.className = `status-message ${type}`;
+                statusMessage.style.display = 'block';
+                
+                // Auto hide after 5 seconds
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>

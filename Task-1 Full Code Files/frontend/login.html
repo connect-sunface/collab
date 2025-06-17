@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f2f2f2;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      width: 90%;
+      max-width: 1000px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .left, .right {
+      flex: 1;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .left {
+      background: #fff;
+    }
+
+    .left h2 {
+      font-size: 26px;
+      margin-bottom: 10px;
+      color: #000;
+    }
+
+    .left p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .left input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .left .forgot {
+      text-align: right;
+      font-size: 13px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .left button {
+      background: #000;
+      color: #fff;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      width: 100%;
+      transition: background 0.3s;
+    }
+
+    .left button:hover {
+      background: #333;
+    }
+
+    .left .or {
+      text-align: center;
+      margin: 10px 0;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .google-btn {
+      background: #fff;
+      color: #333;
+      border: 1px solid #ddd;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    
+    .google-btn:hover {
+      background: #f5f5f5;
+    }
+    
+    .google-btn img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .left .signup {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .left .signup a {
+      color: #000;
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 5px;
+    }
+
+    .right {
+      background: #000;
+      color: #fff;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .right img {
+      max-width: 300px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .right h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .right p {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    /* Mobile OTP Section */
+    #otp-container {
+      display: none;
+      margin-top: 20px;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #eee;
+    }
+    
+    #otp-container h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    #signInButton {
+      background: #fff;
+      color: #333;
+      border: 1px solid #ddd;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      width: 100%;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-bottom: 15px;
+    }
+    
+    #signInButton:hover {
+      background: #f5f5f5;
+    }
+    
+    #mobile {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    
+    #otp-section {
+      margin-top: 15px;
+    }
+    
+    #otp {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    
+    #recaptcha-container {
+      margin-bottom: 15px;
+    }
+    
+    #message {
+      font-size: 13px;
+      color: #666;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* Hide image section on small devices */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .right {
+        display: none;
+      }
+
+      .left {
+        padding: 30px 20px;
+      }
+
+      .left h2 {
+        font-size: 22px;
+      }
+
+      .left input,
+      .left button {
+        font-size: 15px;
+      }
+
+      .google-btn {
+        font-size: 13px;
+      }
+    }
+    
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper input {
+      width: 100%;
+      padding-right: 45px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="left">
+      <h2>Welcome Back!</h2>
+      <p>Please enter log in details below</p>
+      <form id="loginForm">
+        <input type="text" id="identifier" placeholder="Email" required />
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Password" required />
+        </div>
+        
+        <div class="forgot"><a href="forgetpassword.html">Forgot password?</a></div>
+        <button type="submit">Sign in</button>
+        <div class="or">or continue</div>
+        <button type="button" class="google-btn" onclick="googleLogin()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" />
+          Continue with Google
+        </button>
+        
+        <!-- Mobile OTP Section -->
+        <button id="signInButton" onclick="showOtpContainer()">Sign in with Mobile</button>
+        
+        <div id="otp-container">
+          <h2>Login with Mobile OTP</h2>
+          <input type="text" id="mobile" placeholder="+91XXXXXXXXXX" />
+          <button type="button" onclick="sendOTP()">Send OTP</button>
+
+          <div id="recaptcha-container"></div>
+
+          <div id="otp-section">
+            <input type="text" id="otp" placeholder="Enter OTP" />
+            <button type="button" onclick="verifyOTP()">Verify OTP</button>
+          </div>
+
+          <p id="message"></p>
+        </div>
+
+        <div class="signup">
+          Don't have an account? <a href="signup.html">Sign Up</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="right">
+      <img src="login.jpg" alt="3D Character" />
+      <h3>Manage your Website from Anywhere</h3>
+      <p>you can Manage your software on the go with Quicken on the web</p>
+    </div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHNtuRwbI0803qpdQiW4mHbHyOwu2rWUw",
+      authDomain: "send-otp-e4346.firebaseapp.com",
+      projectId: "send-otp-e4346",
+      storageBucket: "send-otp-e4346.appspot.com",
+      messagingSenderId: "413913167926",
+      appId: "1:413913167926:web:03369842129ac23c310097",
+      measurementId: "G-6F78J0G13R"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function googleLogin() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then((result) => {
+          const user = result.user;
+          // Prepare user data for backend
+          const userData = {
+            username: user.displayName || "Google User",
+            email: user.email || "",
+            phone: user.phoneNumber || "",
+            method: "google"
+          };
+          // Send to backend
+          fetch("http://localhost:5000/api/auth/firebase", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userData)
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.token) {
+              localStorage.setItem("token", data.token);
+              localStorage.setItem("isLoggedIn", "true");
+              localStorage.setItem("loginMethod", "google");
+              localStorage.setItem("loggedInUser", JSON.stringify({
+                username: data.user.username,
+                email: data.user.email,
+                phone: data.user.phone
+              }));
+              alert("Google Sign-In successful!");
+              window.location.href = "index.html";
+            } else {
+              alert(data.message || "Failed to save user to backend");
+            }
+          })
+          .catch(err => {
+            alert("Error connecting to backend: " + err.message);
+          });
+        })
+        .catch((error) => {
+          alert("Google Sign-In failed: " + error.message);
+        });
+    }
+
+    
+    let confirmationResult;
+
+    window.onload = () => {
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", {
+        size: "normal",
+        callback: () => {
+          console.log("reCAPTCHA solved");
+        },
+        "expired-callback": () => {
+          alert("reCAPTCHA expired. Please reload.");
+        }
+      });
+
+      recaptchaVerifier.render().then((widgetId) => {
+        window.recaptchaWidgetId = widgetId;
+      });
+
+      document.getElementById("otp-section").style.display = "none";
+      document.getElementById("otp-container").style.display = "none";
+    };
+
+    function sendOTP() {
+      const phone = document.getElementById("mobile").value.trim();
+
+      if (!phone.startsWith("+")) {
+        alert("Please include country code like +91");
+        return;
+      }
+
+      firebase.auth().signInWithPhoneNumber(phone, window.recaptchaVerifier)
+        .then((result) => {
+          confirmationResult = result;
+          document.getElementById("otp-section").style.display = "block";
+          document.getElementById("message").innerText = "OTP sent successfully!";
+          document.getElementById("message").style.color = "#4CAF50";
+        })
+        .catch((error) => {
+          console.error("OTP Send Error:", error);
+          document.getElementById("message").innerText = "Error: " + error.message;
+          document.getElementById("message").style.color = "#F44336";
+        });
+    }
+
+  function verifyOTP() {
+    const code = document.getElementById("otp").value.trim();
+
+    if (!code) {
+        alert("Please enter the OTP");
+        return;
+    }
+
+    confirmationResult.confirm(code)
+        .then((result) => {
+            const phone = result.user.phoneNumber;
+            
+            // First check if phone exists in any account
+            fetch("http://localhost:5000/api/auth/find-user-by-phone", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ phone })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.user) {
+                    // Existing user found - log them in
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("loggedInUser", JSON.stringify({
+                        username: data.user.username,
+                        email: data.user.email || "",
+                        phone: data.user.phone
+                    }));
+                    localStorage.setItem("loginMethod", data.user.method || "otp");
+                    localStorage.setItem("isLoggedIn", "true");
+                    
+                    document.getElementById("message").innerText = `✅ Logged in as ${data.user.username}`;
+                    document.getElementById("message").style.color = "#4CAF50";
+                    
+                    alert("Mobile Login Successful!");
+                    window.location.href = "index.html";
+                } else {
+                    // No existing user - create new account
+                    fetch("http://localhost:5000/api/auth/firebase/phone-login", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ phone })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        localStorage.setItem("token", data.token);
+                        localStorage.setItem("loggedInUser", JSON.stringify({
+                            username: data.user.username,
+                            email: data.user.email || "",
+                            phone: data.user.phone
+                        }));
+                        localStorage.setItem("loginMethod", "otp");
+                        localStorage.setItem("isLoggedIn", "true");
+                        
+                        document.getElementById("message").innerText = `✅ Created new account for ${phone}`;
+                        document.getElementById("message").style.color = "#4CAF50";
+                        
+                        alert("Account Created Successfully!");
+                        window.location.href = "index.html";
+                    })
+                    .catch(error => {
+                        console.error("Error creating new user:", error);
+                        alert("Error creating new account");
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Phone lookup error:", error);
+                alert("Error checking phone number");
+            });
+        })
+        .catch((error) => {
+            console.error("OTP Verification Error:", error);
+            document.getElementById("message").innerText = "Invalid OTP. Please try again.";
+            document.getElementById("message").style.color = "#F44336";
+        });
+      }
+
+  function showOtpContainer() {
+    document.getElementById('signInButton').style.display = 'none';
+    document.getElementById('otp-container').style.display = 'block';
+  }
+
+    document.getElementById("loginForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+  const identifier = document.getElementById("identifier").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!identifier || !password) {
+    alert("Please fill in both fields.");
+    return;
+  }
+
+  try {
+    const res = await fetch("https://sunface-backend.onrender.com/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ identifier, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Login failed");
+      return;
+    }
+
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("loginMethod", "password");
+    localStorage.setItem("token", data.token); 
+    // Store user details using data.user object
+    localStorage.setItem("loggedInUser", JSON.stringify({
+      username: data.user.username,  // Changed from data.username
+      email: data.user.email,        // Changed from data.email
+      phone: data.user.phone         // Changed from data.phone
+    }));
+
+    alert("Login successful!");
+    window.location.href = "index.html";
+
+  } catch (err) {
+    console.error("Login error:", err);
+    alert("Something went wrong. Please try again.");
+  }
+});
+
+    function togglePassword() {
+      const passwordField = document.getElementById("password");
+      const eyeIcon = document.getElementById("eyeIcon");
+
+      const isVisible = passwordField.type === "text";
+      passwordField.type = isVisible ? "password" : "text";
+      eyeIcon.src = isVisible 
+        ? "https://img.icons8.com/ios-glyphs/30/000000/visible--v1.png"
+        : "https://img.icons8.com/ios-glyphs/30/000000/closed-eye.png";
+    }
+
+    function redirectToLanding() {
+    window.location.href = "index.html";
+  }
+
+  // Modify all login success handlers:
+  
+  // Email/password login
+  if (res.ok) {
+    localStorage.setItem('isLoggedIn', 'true');
+    redirectToLanding();
+  }
+
+  // Google login
+  googleLogin().then(() => {
+    localStorage.setItem('isLoggedIn', 'true');
+    redirectToLanding();
+  });
+
+  // Mobile OTP login
+  verifyOTP().then(() => {
+    localStorage.setItem('isLoggedIn', 'true');
+    redirectToLanding();
+  });
+
+  /* Redirect if already logged in
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      window.location.href = 'landing.html';
+    }*/
+
+  </script>
+</body>
+</html>

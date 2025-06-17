@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signup with Email OTP Verification</title>
+  <link rel="stylesheet" href="signup.css" />
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+</head>
+
+<body>
+  <div class="signup-container">
+    <div class="form-panel">
+  <form id="signupForm">
+    <h2>Signup</h2>
+    <input type="text" id="signupUsername" placeholder="Username" required />
+
+    <div class="select-box" id="countrySelectBox">
+  <div class="phone-wrapper">
+    <div class="selected-option" id="selectedOption">
+      <span class="iconify" data-icon="flag:in-4x3" id="selectedFlag"></span>
+      <strong id="countryCode">+91</strong>
+    </div>
+    <input type="tel" id="signupPhone" placeholder="Enter phone number" required />
+  </div>
+
+  <div class="options" id="countryOptions">
+    <input type="text" class="search-box" id="countrySearch" placeholder="Search country" />
+    <ol id="countriesList"></ol>
+  </div>
+</div>
+
+
+    <input type="email" id="signupEmail" placeholder="Email" required />
+    <button type="button" id="sendOtpBtn">Send OTP</button>
+
+    <div id="emailOtpSection" style="display:none; margin-top:10px;">
+      <input type="text" id="emailOtpInput" placeholder="Enter Email OTP" />
+      <button type="button" id="verifyEmailBtn" disabled>Verify OTP</button>
+    </div>
+<div class="password-wrapper">
+  <input type="password" id="signupPassword" placeholder="Password" required />
+  <span id="togglePassword" class="eye-icon">&#128065;</span> <!-- 👁️ emoji as icon -->
+</div>
+
+    
+    <button type="submit" id="signupSubmitBtn" disabled>Sign Up</button>
+    <p>Having an account ? <a href="login.html" class="login-btn">Login</a></p>
+   <p id="message"></p>
+    <dialog id="messageDialog">
+  
+  <button id="closeDialogBtn">Close</button>
+</dialog>
+
+  </form>
+   </div>
+<div class="illustration-panel">
+  <div class="right">
+    <img src="login.jpg" alt="3D Character" />
+    <h3>Manage your Website from Anywhere</h3>
+    <p>You can manage your software on the go with Quicken on the web</p>
+  </div>
+</div>
+
+
+  <script>
+      const togglePassword = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('signupPassword');
+
+  togglePassword.addEventListener('click', () => {
+    const isPassword = passwordInput.type === 'password';
+    passwordInput.type = isPassword ? 'text' : 'password';
+    togglePassword.textContent = isPassword ? '🙈' : '👁️'; // Swap icon
+  });
+  const dialog = document.getElementById('messageDialog');
+  const message = document.getElementById('message');
+  const closeBtn = document.getElementById('closeDialogBtn');
+
+  // Function to show message
+  function showMessage(text) {
+    message.textContent = text;
+    dialog.showModal();
+  }
+
+  // Example usage: showMessage("Signup failed. Try again.");
+  
+  closeBtn.onclick = () => {
+    dialog.close();
+  };
+    const emailInput = document.getElementById('signupEmail');
+    const sendOtpBtn = document.getElementById('sendOtpBtn');
+    const emailOtpSection = document.getElementById('emailOtpSection');
+    const emailOtpInput = document.getElementById('emailOtpInput');
+    const verifyEmailBtn = document.getElementById('verifyEmailBtn');
+    const signupSubmitBtn = document.getElementById('signupSubmitBtn');
+    const messageP = document.getElementById('message');
+
+    const API_BASE = 'https://sunface-backend.onrender.com/api/auth'; // Adjust your API base URL if needed
+
+    function showMessage(msg, isError = true) {
+      messageP.style.color = isError ? 'red' : 'green';
+      messageP.textContent = msg;
+    }
+
+    // Send OTP button click
+    sendOtpBtn.onclick = async () => {
+      const email = emailInput.value.trim();
+      if (!email) return showMessage('Please enter a valid email.');
+
+      sendOtpBtn.disabled = true;
+      showMessage('Sending OTP...', false);
+
+      try {
+        const res = await fetch(`${API_BASE}/signup/request-otp`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          showMessage('OTP sent to your email.', false);
+          emailOtpSection.style.display = 'block';
+          verifyEmailBtn.disabled = false;
+          emailOtpInput.value = '';
+          signupSubmitBtn.disabled = true;
+        } else {
+          showMessage(data.message || 'Failed to send OTP.');
+          sendOtpBtn.disabled = false;
+        }
+      } catch {
+        showMessage('Server error. Try again later.');
+        sendOtpBtn.disabled = false;
+      }
+    };
+
+    // Verify OTP button click
+    verifyEmailBtn.onclick = async () => {
+      const email = emailInput.value.trim();
+      const otp = emailOtpInput.value.trim();
+      if (!otp) return showMessage('Please enter the OTP.');
+
+      verifyEmailBtn.disabled = true;
+      showMessage('Verifying OTP...', false);
+
+      try {
+        const res = await fetch(`${API_BASE}/signup/verify-otp`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, otp }),
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          showMessage('Email verified successfully!', false);
+          signupSubmitBtn.disabled = false;
+          verifyEmailBtn.disabled = true;
+          sendOtpBtn.disabled = true;
+
+          // Disable email input after successful verification
+          emailInput.disabled = true;
+          emailOtpInput.disabled = true;
+        } else {
+          showMessage(data.message || 'Invalid OTP.');
+          verifyEmailBtn.disabled = false;
+        }
+      } catch {
+        showMessage('Server error. Try again later.');
+        verifyEmailBtn.disabled = false;
+      }
+    };
+
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+        localStorage.setItem('loggedInUser', JSON.stringify({
+        username: username,
+        email: email,
+        phone: phone
+      }));
+      localStorage.setItem('loginMethod', 'password');
+      localStorage.setItem('isLoggedIn', 'true');
+      window.location.href = "landing.html"; 
+  }
+  
+  signupForm.onsubmit = async (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById('signupUsername').value.trim();
+    const phone = document.getElementById('signupPhone').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+
+    if (!username || !phone || !email || !password) {
+      return showMessage('Please fill all fields correctly.');
+    }
+
+    try {
+      const res = await fetch(`${API_BASE}/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, phone, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert('Signup successful! Redirecting to login page...');
+        window.location.href = 'login.html';
+      } else {
+        showMessage(data.message || 'Signup failed. Try again.');
+      }
+    } catch (err) {
+      showMessage('Server error. Please try again later.');
+    }
+  };
+  
+  </script>
+  <script src="script.js"></script>
+</body>
+
+</html>

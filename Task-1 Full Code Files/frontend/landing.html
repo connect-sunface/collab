@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunface Tech Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--dark);
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Main Content */
+        .container {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 15px;
+            padding: 15px 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .brand-logo {
+            height: 70px;
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .service-category {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .service-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .category-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+
+        .category-header::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .service-list {
+            padding: 20px;
+        }
+
+        .service-list ul {
+            list-style: none;
+        }
+
+        .service-list li {
+            padding: 12px 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .service-list li:hover {
+            transform: translateX(5px);
+            color: var(--secondary);
+        }
+
+        .service-list li:last-child {
+            border-bottom: none;
+        }
+
+        .service-list li a {
+            color: inherit;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .service-list li a:hover {
+            color: var(--secondary);
+        }
+
+        .service-list li i {
+            color: var(--secondary);
+            margin-right: 12px;
+            font-size: 0.9rem;
+            min-width: 20px;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Button styles */
+        .login-btn {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px 20px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+        }
+        
+        .login-btn:hover {
+            background: #27ae60;
+        }
+        
+        .login-btn i {
+            margin-right: 8px;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+        
+        .logout-btn i {
+            margin-right: 8px;
+        }
+
+        .login-message{
+            margin-left: 10px;
+            justify-items:center;
+        }
+
+        /* Disabled links */
+        .disabled-link {
+            /*pointer-events: none;*/
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Profile and Icon Css*/ 
+
+        .icon-btn {
+            background: transparent;
+            border: none;
+            color: var(--dark);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            color: white;
+            background: var(--secondary);
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .icon-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .icon-btn:hover i {
+            transform: scale(1.1);
+        }
+
+        .icon-buttons{
+            
+            display: flex;
+            gap: 20px;
+            position: absolute;
+            right: 170px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Updated Profile Dropdown */
+        .profile-dropdown {
+            position: absolute;
+            top: 85px; /* Adjusted position */
+            right: 30px;
+            width: 300px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            padding: 0;
+            z-index: 999;
+            display: none;
+            overflow: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(10px);
+            opacity: 0;
+        }
+
+        .profile-dropdown.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+
+        .profile-body {
+            padding: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f5ff;
+            transition: var(--transition);
+            align-items: flex-start;
+        }
+
+        .info-row:hover {
+            transform: translateX(5px);
+            border-color: var(--secondary);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .info-label {
+            width: 120px;
+            color: #7f8c8d;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .info-value {
+            flex: 1;
+            color: #2c3e50;
+            font-weight: 500;
+            text-align: right;
+            font-size: 0.95rem;
+        }
+
+        /* Added dropdown arrow */
+        .profile-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            transform: rotate(45deg);
+            z-index: -1;
+            box-shadow: -2px -2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Indicator for incomplete profile */
+        .indicator {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            animation: blink 1.5s infinite;
+        }
+
+        .item-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 8px;
+            line-height: 20px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* Settings Dropdown */
+        .settings-dropdown {
+            position: absolute;
+            top: 85px;
+            right: 30px;
+            width: 300px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            padding: 0;
+            z-index: 999;
+            display: none;
+            overflow: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(10px);
+            opacity: 0;
+        }
+
+        .settings-dropdown.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .settings-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .settings-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+
+        .settings-header h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .settings-body {
+            padding: 15px 0;
+        }
+
+        .settings-list {
+            list-style: none;
+        }
+
+        .settings-list li {
+            padding: 12px 20px;
+            border-bottom: 1px solid #f0f5ff;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .settings-list li:last-child {
+            border-bottom: none;
+        }
+
+        .settings-list li:hover {
+            background-color: #f8f9fa;
+        }
+
+        .settings-list li i {
+            width: 30px;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+        
+        .setting-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .setting-text {
+            flex: 1;
+        }
+
+        .settings-list li a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .settings-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            transform: rotate(45deg);
+            z-index: -1;
+            box-shadow: -2px -2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .disabled-setting {
+            cursor: not-allowed;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .settings-list .setting-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .services-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .welcome-text h1 {
+                font-size: 2rem;
+            }
+            
+            .progress-bar {
+                width: 200px;
+            }
+            
+            .brand-logo {
+                height: 60px;
+            }
+            
+            .login-btn, .logout-btn {
+                position: static;
+                transform: none;
+                margin-top: 15px;
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .settings-dropdown, .profile-dropdown {
+                width: 280px;
+                right: 15px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Main Content -->
+    <div class="container">
+        <header>
+            <img src="https://sunface.in/wp-content/uploads/2022/12/Sunface-Web-Final-logo_2-01-1.png" 
+                alt="Sunface Tech Services" class="brand-logo">  
+
+            <button id="loginBtn" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i> Login Now
+            </button>
+            
+            <button id="logoutBtn" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button> 
+
+             <div class="icon-buttons" id="userIcons" style="display: none;">
+                <button class="icon-btn" id="profileIcon"><i class="fas fa-user-circle"></i></button>
+                <button class="icon-btn" id="settingsIcon">
+                    <i class="fas fa-cog"></i>
+                    <span class="indicator" id="settingsIndicator" style="display: none;">!</span>
+                </button>
+            </div>
+
+        </header>
+
+        <div class="login-prompt">
+            <div class="login-message">
+                <i class="fas fa-lock"></i>
+                <h3>Login Required</h3>
+                <p>Please log in to access all services and features <br></br></p>
+            </div>
+        </div>
+        
+        <!-- Profile Dropdown -->
+        <div id="profileDropdown" class="profile-dropdown">
+            <div class="profile-header">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3 id="welcomeUser">Welcome</h3>
+            </div>
+            <div class="profile-body">
+                <div class="info-row">
+                    <span class="info-label">Name:</span>
+                    <span class="info-value" id="userName">...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value" id="userEmail">...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Phone:</span>
+                    <span class="info-value" id="userPhone">...</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Login Method:</span>
+                    <span class="info-value" id="loginMethod">...</span>
+                </div>
+
+                <div class = info-row>
+                    <span class= "info-package"> Packages (Coming Soon!) </span> 
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Dropdown -->
+        <div id="settingsDropdown" class="settings-dropdown">
+        <div class="settings-header">
+            <div class="settings-avatar">
+                <i class="fas fa-cog"></i>
+            </div>
+            <h3>Account Settings</h3>
+        </div>
+        <div class="settings-body">
+            <ul class="settings-list">
+                <li id="nameSetting">
+                    <a href="change_name.html" class="setting-link">
+                        <div class="setting-content">
+                            <i class="fas fa-user-edit"></i>
+                            <div class="setting-text">Change my name</div>
+                            <span class="item-indicator" id="nameIndicator" style="display: none;">!</span>
+                        </div>
+                    </a>
+                </li>
+                <li id="emailSetting">
+                    <a href="update_email.html" class="setting-link">
+                        <div class="setting-content">
+                            <i class="fas fa-envelope"></i>
+                            <div class="setting-text">Update my mail id</div>
+                            <span class="item-indicator" id="emailIndicator" style="display: none;">!</span>
+                        </div>
+                    </a>
+                </li>
+                <li id="passwordSetting">
+                    <a href="change_password.html" class="setting-link">
+                        <div class="setting-content">
+                            <i class="fas fa-key"></i>
+                            <div class="setting-text">Change my Password</div>
+                            <span class="item-indicator" id="passwordIndicator" style="display: none;">!</span>
+                        </div>
+                    </a>
+                </li>
+                <li id="phoneSetting">
+                    <a href="update_phone.html" class="setting-link">
+                        <div class="setting-content">
+                            <i class="fas fa-phone"></i>
+                            <div class="setting-text">Update my Phone Number</div>
+                            <span class="item-indicator" id="phoneIndicator" style="display: none;">!</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+        <div class="services-container">
+            <!-- Shopping Website Design -->
+            <div class="service-category">
+                <div class="category-header">
+                    <h2>Shopping Website Design</h2>
+                </div>
+                <div class="service-list">
+                    <ul>
+                        <li><a href="https://sunface.in/shopify-website-design/" class="disabled-link"><i class="fas fa-shopping-cart"></i> Shopify Website Design</a></li>
+                        <li><a href="https://sunface.in/magento-website-design/" class="disabled-link"><i class="fas fa-shopping-cart"></i> Magento Website Design</a></li>
+                        <li><a href="https://sunface.in/opencart-website-design/" class="disabled-link"><i class="fas fa-shopping-cart"></i> OpenCart Website Design</a></li>
+                        <li><a href="https://sunface.in/woocommerce-website-design/" class="disabled-link"><i class="fas fa-shopping-cart"></i> WooCommerce Website Design</a></li>
+                        <li><a href="https://sunface.in/custom-e-commerce-website-design/" class="disabled-link"><i class="fas fa-shopping-cart"></i> Custom E-Commerce Website Design</a></li>
+                        <li><a href="https://sunface.in/e-commerce-listing-services/" class="disabled-link"><i class="fas fa-shopping-cart"></i> E-Commerce Listing Services</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Business Website Design -->
+            <div class="service-category">
+                <div class="category-header">
+                    <h2>Business Website Design</h2>
+                </div>
+                <div class="service-list">
+                    <ul>
+                        <li><a href="https://sunface.in/website-design/" class="disabled-link"><i class="fas fa-briefcase"></i> Static Website Design</a></li>
+                        <li><a href="https://sunface.in/dynamic-website-design/" class="disabled-link"><i class="fas fa-briefcase"></i> Dynamic Website Design</a></li>
+                        <li><a href="https://sunface.in/landing-page-design/" class="disabled-link"><i class="fas fa-briefcase"></i> Landing Page Design</a></li>
+                        <li><a href="https://sunface.in/single-page-design/" class="disabled-link"><i class="fas fa-briefcase"></i> Single Page Design</a></li>
+                        <li><a href="https://sunface.in/multi-page-design/" class="disabled-link"><i class="fas fa-briefcase"></i> Multi Page Design</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Educational Website Design -->
+            <div class="service-category">
+                <div class="category-header">
+                    <h2>Educational Website Design</h2>
+                </div>
+                <div class="service-list">
+                    <ul>
+                        <li><a href="https://sunface.in/school-website-design/" class="disabled-link"><i class="fas fa-graduation-cap"></i> School Website Design</a></li>
+                        <li><a href="https://sunface.in/college-website-design/" class="disabled-link"><i class="fas fa-graduation-cap"></i> College Website Design</a></li>
+                        <li><a href="https://sunface.in/polytechnic-website-design/" class="disabled-link"><i class="fas fa-graduation-cap"></i> Polytechnic Website Design</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Mobile App Development -->
+            <div class="service-category">
+                <div class="category-header">
+                    <h2>Mobile App Development</h2>
+                </div>
+                <div class="service-list">
+                    <ul>
+                        <li><a href="https://sunface.in/android-app-development/" class="disabled-link"><i class="fas fa-mobile-alt"></i> Android App Development</a></li>
+                        <li><a href="https://sunface.in/ios-app-development/" class="disabled-link"><i class="fas fa-mobile-alt"></i> iOS App Development</a></li>
+                        <li><a href="https://sunface.in/hybrid-app-development/" class="disabled-link"><i class="fas fa-mobile-alt"></i> Hybrid App Development</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Web Development -->
+            <div class="service-category">
+                <div class="category-header">
+                    <h2>Web Development</h2>
+                </div>
+                <div class="service-list">
+                    <ul>
+                        <li><a href="https://sunface.in/web-application-development/" class="disabled-link"><i class="fas fa-code"></i> Web Application Development</a></li>
+                        <li><a href="https://sunface.in/custom-web-application-development/" class="disabled-link"><i class="fas fa-code"></i> Custom Web Application Development</a></li>
+                        <li><a href="https://sunface.in/erp-application-development/" class="disabled-link"><i class="fas fa-code"></i> ERP Application Development</a></li>
+                        <li><a href="https://sunface.in/software-development/" class="disabled-link"><i class="fas fa-code"></i> Software Development</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- SEO Services -->
+            <div class="service-category">
+                <div class="category-header">
+                    <h2>SEO Services</h2>
+                </div>
+                <div class="service-list">
+                    <ul>                        
+                        <li><a href="https://sunface.in/local-seo-service/" class="disabled-link"><i class="fas fa-chart-line"></i> Local SEO Service</a></li>
+                        <li><a href="https://sunface.in/on-page-seo-service/" class="disabled-link"><i class="fas fa-chart-line"></i> On-Page SEO Service</a></li>
+                        <li><a href="https://sunface.in/off-page-seo-service/" class="disabled-link"><i class="fas fa-chart-line"></i> Off-Page SEO Service</a></li>
+                        <li><a href="https://sunface.in/google-seo-service/" class="disabled-link"><i class="fas fa-chart-line"></i> Google SEO Service</a></li>
+                        <li><a href="https://sunface.in/digital-marketing-service/" class="disabled-link"><i class="fas fa-chart-line"></i> Digital Marketing Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Messaging Services -->
+            <div class="service-category">
+                <div class="category-header">
+                    <h2>Messaging Suite Services</h2>
+                </div>
+                <div class="service-list">
+                    <ul>
+                        <li><a href="#" class="disabled-link"><i class="fab fa-facebook-messenger"></i> Bulk WhatsApp Message Service </a></li>
+                        <li><a href="#" class="disabled-link"><i class="fab fa-facebook-messenger"></i> WhatsApp AI Chatbot Service</a></li>
+                        <li><a href="#" class="disabled-link"><i class="fab fa-facebook-messenger"></i> Blue Tick Verification Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Addon Services -->
+            <div class="service-category">
+                <div class="category-header">
+                    <h2>Addon Services</h2>
+                </div>
+                <div class="service-list">
+                    <ul>
+                        <li><a href="https://sunface.in/website-security/" class="disabled-link"><i class="fas fa-plus-circle"></i> Website Security</a></li>
+                        <li><a href="https://sunface.in/website-maintenance/" class="disabled-link"><i class="fas fa-plus-circle"></i> Website Maintenance</a></li>
+                        <li><a href="https://sunface.in/website-migration/" class="disabled-link"><i class="fas fa-plus-circle"></i> Website Migration</a></li>
+                        <li><a href="#" class="disabled-link"><i class="fas fa-plus-circle"></i> Website Hosting</a></li>
+                        <li><a href="#" class="disabled-link"><i class="fas fa-plus-circle"></i> Domain Registration</a></li>
+                        <li><a href="#" class="disabled-link"><i class="fas fa-plus-circle"></i> Payment Integration</a></li>
+                        <li><a href="#" class="disabled-link"><i class="fas fa-plus-circle"></i> Delivery Integration</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.container');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const loginBtn = document.getElementById('loginBtn');
+            const serviceLinks = document.querySelectorAll('.service-list li a');
+            
+            // Initialize the page
+            container.style.display = 'block';
+            checkLoginStatus();
+            
+            // Check if user is logged in
+            function checkLoginStatus() {
+                const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                
+                // Toggle buttons
+                logoutBtn.style.display = isLoggedIn ? 'block' : 'none';
+                loginBtn.style.display = isLoggedIn ? 'none' : 'block';
+                
+                const userIcons = document.getElementById('userIcons');
+                userIcons.style.display = isLoggedIn ? 'flex' : 'none';
+
+                // Toggle service links
+                serviceLinks.forEach(link => {
+                    if (isLoggedIn) {
+                        link.classList.remove('disabled-link');
+                    } else {
+                        link.classList.add('disabled-link');
+                    }
+                });
+                
+                
+                // Show/hide login prompt
+                const loginPrompt = document.querySelector('.login-prompt');
+                loginPrompt.style.display = isLoggedIn ? 'none' : 'block';
+            }
+            
+            loginBtn.addEventListener('click', login);
+
+            function login(){
+                window.location.href = 'login.html';
+            }
+            
+            // Logout functionality
+            logoutBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.setItem('isLoggedIn', 'false');
+                    localStorage.clear();
+                    checkLoginStatus();
+                }
+            });
+
+            // Add link protection
+            serviceLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (localStorage.getItem('isLoggedIn') !== 'true') {
+                        e.preventDefault();
+                        alert('Please login to access this service');
+                        return false;
+                    }
+                });
+            });
+            
+            // Add hover effect to service categories
+            const categories = document.querySelectorAll('.service-category');
+            categories.forEach(category => {
+                category.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                category.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Add hover effect to service items
+            const serviceItems = document.querySelectorAll('.service-list li');
+            serviceItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(5px)';
+                    this.style.color = 'var(--secondary)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                    this.style.color = '';
+                });
+            });
+
+            const profileIcon = document.getElementById("profileIcon");
+            const profileDropdown = document.getElementById("profileDropdown");
+
+            // Fill profile data
+            const user = JSON.parse(localStorage.getItem("loggedInUser"));
+            const method = localStorage.getItem("loginMethod");
+
+            if (user && !user.username && user.email) {
+            user.username = user.email.split('@')[0];
+            }
+           
+            if (user) {
+            document.getElementById("userName").textContent = user.username || 'N/A';
+            document.getElementById("userEmail").textContent = user.email || 'N/A';
+            document.getElementById("userPhone").textContent = user.phone || 'N/A';
+            
+            let readable = "Unknown";
+            if (method === "password") readable = "ID-Password";
+            else if (method === "google") readable = "Google Accounts";
+            else if (method === "otp") readable = "Mobile OTP";
+            
+            document.getElementById("loginMethod").textContent = readable;
+            document.getElementById("welcomeUser").textContent = `Welcome ${user.username || ''} 🎉`;
+            }
+
+            // Show/hide logic
+            let hideTimeout;
+
+            const showDropdown = () => {
+                clearTimeout(hideTimeout);
+                const dropdown = document.getElementById("profileDropdown");
+                dropdown.style.display = "block";
+                setTimeout(() => {
+                    dropdown.classList.add("active");
+                }, 10);
+            };
+
+            const hideDropdown = () => {
+                const dropdown = document.getElementById("profileDropdown");
+                dropdown.classList.remove("active");
+                hideTimeout = setTimeout(() => {
+                    dropdown.style.display = "none";
+                }, 300);
+            };
+
+            // Show on hover or click
+            profileIcon.addEventListener("mouseenter", showDropdown);
+            profileIcon.addEventListener("click", showDropdown);
+            profileIcon.addEventListener("mouseleave", hideDropdown);
+
+            profileDropdown.addEventListener("mouseenter", showDropdown);
+            profileDropdown.addEventListener("mouseleave", hideDropdown);
+        
+
+            // Settings dropdown functionality
+            const settingsIcon = document.getElementById("settingsIcon");
+            const settingsDropdown = document.getElementById("settingsDropdown");
+            const settingsIndicator = document.getElementById("settingsIndicator");
+            
+            /* Mock user data with missing information
+            const mockUser = {
+                username: "John Doe",
+                email: "N/A",
+                phone: "555-1234",
+                loginMethod: "google"
+            };
+            
+            // Store mock user data in localStorage
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('loggedInUser', JSON.stringify(mockUser));
+            localStorage.setItem('loginMethod', mockUser.loginMethod);*/
+
+            function checkProfileData() {
+                const userName = document.getElementById('userName').textContent;
+                const userEmail = document.getElementById('userEmail').textContent;
+                const userPhone = document.getElementById('userPhone').textContent;
+                
+                // Check if any data is missing
+                const isNameMissing = userName === 'N/A' || userName === '...';
+                const isEmailMissing = userEmail === 'N/A' || userEmail === '...';
+                const isPhoneMissing = userPhone === 'N/A' || userPhone === '...';
+                
+                // Show/hide main settings indicator
+                if (isNameMissing || isEmailMissing || isPhoneMissing) {
+                    settingsIndicator.style.display = 'flex';
+                } else {
+                    settingsIndicator.style.display = 'none';
+                }
+                
+                // Show/hide individual indicators in settings dropdown
+                document.getElementById('nameIndicator').style.display = isNameMissing ? 'inline-block' : 'none';
+                document.getElementById('emailIndicator').style.display = isEmailMissing ? 'inline-block' : 'none';
+                document.getElementById('phoneIndicator').style.display = isPhoneMissing ? 'inline-block' : 'none';
+                
+                // Password indicator always hidden for now
+                document.getElementById('passwordIndicator').style.display = 'none';
+                
+                // Highlight settings items with missing data
+                document.getElementById('nameSetting').style.backgroundColor = isNameMissing ? '#F7E4E3' : '';
+                document.getElementById('emailSetting').style.backgroundColor = isEmailMissing ? '#F7E4E3' : '';
+                document.getElementById('phoneSetting').style.backgroundColor = isPhoneMissing ? '#F7E4E3' : '';
+            }
+            
+            // After filling profile data, check for NA values
+            if (user) {
+                document.getElementById("userName").textContent = user.username || 'N/A';
+                document.getElementById("userEmail").textContent = user.email || 'N/A';
+                document.getElementById("userPhone").textContent = user.phone || 'N/A';
+                
+                let readable = "Unknown";
+                if (method === "password") readable = "ID-Password";
+                else if (method === "google") readable = "Google Accounts";
+                else if (method === "otp") readable = "Mobile OTP";
+                
+                document.getElementById("loginMethod").textContent = readable;
+                
+                // Check profile data for NA values
+                checkProfileData();
+                updateSettingsState();
+            }
+
+            // Settings dropdown functionality
+            let settingsHideTimeout;
+            
+            const showSettingsDropdown = () => {
+                clearTimeout(settingsHideTimeout);
+                settingsDropdown.style.display = "block";
+                setTimeout(() => {
+                    settingsDropdown.classList.add("active");
+                }, 10);
+                
+                // Re-check profile data each time settings dropdown is opened
+                updateSettingsState();
+                checkProfileData();
+            };
+            
+            const hideSettingsDropdown = () => {
+                settingsDropdown.classList.remove("active");
+                settingsHideTimeout = setTimeout(() => {
+                    settingsDropdown.style.display = "none";
+                }, 300);
+            };
+            
+            // Show on hover or click
+            settingsIcon.addEventListener("mouseenter", showSettingsDropdown);
+            settingsIcon.addEventListener("click", showSettingsDropdown);
+            settingsIcon.addEventListener("mouseleave", hideSettingsDropdown);
+            
+            settingsDropdown.addEventListener("mouseenter", showSettingsDropdown);
+            settingsDropdown.addEventListener("mouseleave", hideSettingsDropdown);
+
+            // Prevent settings dropdown from closing when interacting with it
+            settingsDropdown.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+            
+            // Hide settings dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!settingsDropdown.contains(e.target) && !settingsIcon.contains(e.target)) {
+                    hideSettingsDropdown();
+                }
+            });
+
+            // New function to update settings state based on login method
+            function updateSettingsState() {
+                const method = localStorage.getItem('loginMethod');
+                const emailLink = document.querySelector('#emailSetting .setting-link');
+                const emailText = emailLink.querySelector('.setting-text');
+                const phoneLink = document.querySelector('#phoneSetting .setting-link');
+                const phoneText = phoneLink.querySelector('.setting-text');
+                
+                // Reset both first
+                emailLink.classList.remove('disabled-setting');
+                phoneLink.classList.remove('disabled-setting');
+                emailText.innerHTML = 'Update my mail id';
+                phoneText.innerHTML = 'Update my Phone Number';
+                
+                // Disable email update for password/google logins
+                if (method === 'password' || method === 'google') {
+                    emailLink.removeAttribute('href');
+                    emailLink.classList.add('disabled-setting');
+                    emailText.innerHTML = 'Update my mail id <span style="font-size: 0.8em; color: #e74c3c;">(cannot change for this login)</span>';
+                }
+                
+                // Disable phone update for OTP login
+                if (method === 'otp') {
+                    phoneLink.removeAttribute('href');
+                    phoneLink.classList.add('disabled-setting');
+                    phoneText.innerHTML = 'Update my Phone Number <span style="font-size: 0.8em; color: #e74c3c;">(cannot change for OTP login)</span>';
+                }
+            }
+            
+                        
+        });
+         
+    </script>
+</body>
+</html>

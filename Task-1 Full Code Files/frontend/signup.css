@@ -1,0 +1,870 @@
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #f5f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #333;
+}
+
+/* Container Styles */
+.signup-container {
+  display: flex;
+  max-width: 1000px;
+  width: 90%;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  min-height: 600px;
+}
+
+.form-panel {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.illustration-panel {
+  flex: 1;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: none;
+}
+
+/* Form Styles */
+#signupForm {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#signupForm h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #2d3748;
+  text-align: center;
+}
+
+/* Input Styles */
+#signupForm input {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: #f8fafc;
+}
+
+#signupForm input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  background-color: #fff;
+}
+
+/* Country Select Box - Fixed Styles */
+.select-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.selected-option {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0 16px;
+  background-color: #f8fafc;
+  height: 50px;
+  gap: 10px;
+}
+
+.selected-option > div {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+#selectedFlag {
+  width: 24px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+#countryCode {
+  min-width: 40px;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+#signupPhone {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding-left: 10px;
+  min-width: 0;
+  width: 100%;
+}
+
+/* Country Options Dropdown */
+.options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 10;
+  display: none;
+}
+
+.options.active {
+  display: block;
+}
+
+.search-box {
+  padding: 12px 15px;
+  border-bottom: 1px solid #e2e8f0;
+  width: 100%;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 0;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 2;
+}
+
+#countriesList {
+  list-style: none;
+}
+
+#countriesList li {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+#countriesList li:hover {
+  background-color: #f7fafc;
+}
+
+#countriesList li:last-child {
+  border-bottom: none;
+}
+
+#countriesList li .iconify {
+  width: 24px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.country-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.country-code {
+  margin-left: auto;
+  color: #718096;
+  font-size: 14px;
+}
+
+/* Button Styles */
+#signupForm button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 15px;
+}
+
+#sendOtpBtn, #verifyEmailBtn {
+  background-color: #000000;
+  color: white;
+}
+
+#sendOtpBtn:hover, #verifyEmailBtn:hover {
+  background-color: #2acb55;
+}
+
+#signupSubmitBtn {
+  background-color: #48bb78;
+  color: white;
+  margin-top: 10px;
+}
+
+#signupSubmitBtn:hover {
+  background-color: #38a169;
+}
+
+#signupSubmitBtn:disabled {
+  background-color: #cbd5e0;
+  cursor: not-allowed;
+}
+
+#signupForm button a {
+  text-decoration: none;
+  color: white;
+  display: block;
+}
+
+/* OTP Section */
+#emailOtpSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#emailOtpInput {
+  margin-bottom: 0;
+}
+
+/* Message */
+#message {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  min-height: 20px;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .illustration-panel {
+    display: block;
+  }
+  
+  .form-panel {
+    padding: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-container {
+    width: 95%;
+    min-height: auto;
+  }
+  
+  .form-panel {
+    padding: 30px 20px;
+  }
+  
+  #signupForm h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+}
+/* Adjust the phone input inside the country select box */
+#signupPhone {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding-left: 10px;
+  font-size: 16px;
+  height: 50px;
+  color: #2d3748;
+}
+
+#signupPhone::placeholder {
+  color: #a0aec0;
+  font-size: 15px;
+}
+
+/* Focus effect for inner phone input */
+#signupPhone:focus {
+  outline: none;
+  background-color: transparent;
+}
+/* Country Select Box Styles */
+.select-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.selected-option {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0 16px;
+  background-color: #f8fafc;
+  height: 50px;
+  gap: 8px;
+}
+
+.selected-option > div {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+#selectedFlag {
+  width: 24px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+#countryCode {
+  min-width: 40px;
+  font-size: 15px;
+  flex-shrink: 0;
+  color: #4a5568;
+}
+
+#signupPhone {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding-left: 10px;
+  min-width: 0;
+  width: 100%;
+  font-size: 15px;
+}
+
+/* Country Options Dropdown - Fixed Version */
+.options {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 100;
+  display: none;
+  border: 1px solid #e2e8f0;
+}
+
+.options.active {
+  display: block;
+}
+
+.search-box {
+  padding: 12px 16px;
+  border: none;
+  border-bottom: 1px solid #e2e8f0;
+  width: 100%;
+  font-size: 15px;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 2;
+}
+
+.search-box:focus {
+  outline: none;
+  border-bottom-color: #667eea;
+}
+
+#countriesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#countriesList li {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.2s ease;
+}
+
+#countriesList li:hover {
+  background-color: #f8fafc;
+}
+
+#countriesList li:last-child {
+  border-bottom: none;
+}
+
+#countriesList li .iconify {
+  width: 24px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.country-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.country-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 15px;
+}
+
+.country-code {
+  color: #718096;
+  font-size: 14px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Active/Selected Country */
+#countriesList li.selected {
+  background-color: #ebf4ff;
+  font-weight: 500;
+}
+
+/* Scrollbar styling */
+.options::-webkit-scrollbar {
+  width: 6px;
+}
+
+.options::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 0 8px 8px 0;
+}
+
+.options::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+
+.options::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+.select-box {
+  width: 100%;
+  position: relative;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.phone-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #cbd5e0;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #f9fafb;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+  max-width: 400px;
+}
+
+.selected-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+  color: #2d3748;
+}
+
+#signupPhone {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  font-size: 1rem;
+  padding: 8px;
+  background: transparent;
+  color: #2d3748;
+}
+
+#signupPhone::placeholder {
+  color: #a0aec0;
+}
+
+.options {
+  margin-top: 10px;
+  display: none;
+  position: absolute;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 100;
+}
+
+.search-box {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.select-box {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  font-family: Arial, sans-serif;
+}
+
+.phone-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+}
+
+.selected-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-right: 1px solid #ddd;
+  background: #f9f9f9;
+}
+
+.selected-option:hover {
+  background: #f0f0f0;
+}
+
+.selected-option strong {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+#signupPhone {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 12px;
+  font-size: 14px;
+  min-width: 0; /* Prevent input from overflowing */
+}
+
+.options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 10;
+}
+
+.search-box {
+  width: calc(100% - 16px);
+  padding: 8px;
+  margin: 8px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  outline: none;
+}
+
+#countriesList {
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#countriesList li {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+#countriesList li:hover {
+  background-color: #f5f5f5;
+}
+
+#countriesList li .iconify {
+  margin-right: 8px;
+}
+
+/* Show options when active */
+.select-box.active .options {
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .selected-option {
+    padding: 8px;
+  }
+  #signupPhone {
+    padding: 8px;
+  }
+}
+.select-box {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  font-family: Arial, sans-serif;
+}
+
+.phone-wrapper {
+  display: flex;
+  align-items: stretch; /* Makes both children equal height */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  height: 44px; /* Fixed height for perfect alignment */
+}
+
+.selected-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  cursor: pointer;
+  border-right: 1px solid #ddd;
+  background: #f9f9f9;
+  height: 100%; /* Takes full height of parent */
+}
+
+.selected-option:hover {
+  background: #f0f0f0;
+}
+
+.selected-option strong {
+  font-weight: 600;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 1; /* Ensures text doesn't affect vertical alignment */
+}
+
+#signupPhone {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0 12px;
+  font-size: 14px;
+  height: 100%; /* Takes full height of parent */
+  min-width: 0;
+}
+
+/* Dropdown styles */
+.options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 10;
+}
+
+.search-box {
+  width: calc(100% - 16px);
+  padding: 8px;
+  margin: 8px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  outline: none;
+}
+
+#countriesList {
+  max-height: 100px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#countriesList li {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+#countriesList li:hover {
+  background-color: #f5f5f5;
+}
+
+#countriesList li .iconify {
+  margin-right: 8px;
+}
+
+.select-box.active .options {
+  display: block;
+}
+
+/* Ensures perfect vertical alignment of all elements */
+.iconify {
+  vertical-align: middle;
+  line-height: 1;
+}
+#signupPhone {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0 12px;
+  font-size: 14px;
+  height: 10px; /* Match country selector height */
+  line-height: 104px; /* Center text vertically */
+  box-sizing: border-box; /* Include padding in height */
+}
+
+.selected-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  height: 29px; /* Fixed height */
+  cursor: pointer;
+  border-right: 1px solid #ddd;
+  background: #f9f9f9;
+}
+.login-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 10px;
+  text-decoration: none;
+  color: white;
+  background-color: #000000;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+  background-color: #000000;
+}
+#messageDialog {
+  border: none;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 300px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+}
+
+#messageDialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#closeDialogBtn {
+  margin-top: 15px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.illustration-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom right, #667eea, #000000);
+  padding: 30px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.right {
+  text-align: center;
+  max-width: 300px;
+  padding: 10px;
+}
+
+.right img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.right h3 {
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.right p {
+  font-size: 0.95rem;
+  color: #e5e5e5;
+  line-height: 1.4;
+}
+@media (max-width: 768px) {
+  .illustration-panel {
+    display: none;
+  }
+}
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding: 14px 48px 14px 14px; /* space for the icon on the right */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.eye-icon {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+  color: #555;
+  z-index: 10;
+  line-height: 1;
+}
+
+/* Optional: Touch target improvement for mobile */
+@media (max-width: 600px) {
+  .eye-icon {
+    font-size: 24px;
+    right: 12px;
+  }
+
+  .password-wrapper input {
+    font-size: 16px;
+    padding-right: 48px;
+  }
+}
